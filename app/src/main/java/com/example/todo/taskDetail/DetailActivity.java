@@ -16,7 +16,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_arc);
-
+//
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolBar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
