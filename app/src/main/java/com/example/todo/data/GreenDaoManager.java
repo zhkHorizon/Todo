@@ -49,8 +49,25 @@ public class GreenDaoManager {
         return taskDao.insert(task);
     }
 
+    public int deleteTaskById(Long id){
+        if(id != null){
+            taskDao.deleteByKey(id);
+            return 1;
+        }
+        return 0;
+    }
 
     public int updateTasks(Task task) {
+        Task dbTask = taskDao.queryBuilder()
+                .where(TaskDao.Properties.Id.eq(task.getId()))
+                .unique();
+        if(dbTask != null){
+            dbTask.setTitle(task.getTitle());
+            dbTask.setContext(task.getContext());
+            dbTask.setState(task.getState());
+            taskDao.update(dbTask);
+            return 1;
+        }
         return 0;
     }
 }

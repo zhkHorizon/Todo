@@ -10,6 +10,7 @@ public class AETaskPresenter implements AETaskContract.Presenter{
 
     GreenDaoManager greenDaoManager;
     private AETaskContract.View mAETaskView;
+    private final int defaultState = 0;
 
     public AETaskPresenter(GreenDaoManager manager,AETaskContract.View view ){
         this.greenDaoManager = manager;
@@ -22,12 +23,18 @@ public class AETaskPresenter implements AETaskContract.Presenter{
     }
 
     @Override
-    public void saveTask(String title, String content,int state) {
-        String a = title;
-        String b = content;
-        Task task = new Task(null,title,content,state);
+    public void saveTaskForNew(String title, String content) {
+        Task task = new Task(null,title,content,defaultState);
         greenDaoManager.addTasks(task);
         mAETaskView.showMsg("新建成功");
+        mAETaskView.closePage();
+    }
+
+    @Override
+    public void saveTaskForEdit(String title, String content, int state) {
+        Task task = new Task(null,title,content,defaultState);
+        greenDaoManager.updateTasks(task);
+        mAETaskView.showMsg("修改成功");
         mAETaskView.closePage();
     }
 

@@ -53,8 +53,10 @@ public class AETaskFragment extends Fragment implements AETaskContract.View{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mPresenter.saveTask(mTitle.getText().toString(),mContent.getText().toString(),state.getSelectedItemPosition());
+                if(taskType == null) //新建存储
+                    mPresenter.saveTaskForNew(mTitle.getText().toString(),mContent.getText().toString());
+                else //编辑存储
+                    mPresenter.saveTaskForEdit(mTitle.getText().toString(),mContent.getText().toString(),state.getSelectedItemPosition());
             }
         });
     }

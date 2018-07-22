@@ -93,7 +93,6 @@ public class ListFragment extends Fragment implements ListContract.View{
     public void addNewTask(){
         //跳转活动
         Intent intent = new Intent(getContext(), AETaskActivity.class);
-
         intent.putExtra("TYPE",ADD);
         startActivity(intent);
     }

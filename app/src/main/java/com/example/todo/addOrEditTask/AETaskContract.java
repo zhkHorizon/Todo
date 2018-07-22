@@ -7,7 +7,8 @@ import com.example.todo.data.Task;
 
 public class AETaskContract {
     interface Presenter extends BasePresenter{
-        void saveTask(String title,String content,int state);
+        void saveTaskForNew(String title,String content);
+        void saveTaskForEdit(String title,String content,int state);
         Task findTask(Long id);
     }
     interface View extends BaseView<Presenter>{
