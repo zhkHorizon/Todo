@@ -1,36 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="20dp"
+    android:orientation="vertical">
+
     <TextView
-        android:text="标题"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:drawableLeft="@android:drawable/arrow_down_float"
+        android:text="  任务标题"
+        android:textSize="@dimen/text_size_normal" />
+
     <TextView
         android:id="@+id/detail_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="标题内容"/>
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_text"
+        android:text="标题内容"
+        android:textColor="?android:attr/textColorTertiary"
+        android:textSize="@dimen/text_size_larger" />
+
     <TextView
-        android:text="内容"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@android:drawable/arrow_down_float"
+        android:text=" 任务描述"
+        android:textSize="@dimen/text_size_normal" />
 
     <TextView
         android:id="@+id/detail_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="任务描述" />
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_text"
+        android:text="任务描述"
+        android:textColor="?android:attr/textColorTertiary"
+        android:textSize="@dimen/text_size_larger" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="状态" />
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@android:drawable/arrow_down_float"
+        android:text=" 任务状态"
+        android:textSize="@dimen/text_size_normal" />
 
     <TextView
         android:id="@+id/detail_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="进行中" />
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_text"
+        android:text="进行中"
+        android:textColor="?android:attr/textColorTertiary"
+        android:textSize="@dimen/text_size_larger" />
 
 </LinearLayout>

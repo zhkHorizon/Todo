@@ -44,7 +44,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
             str = "进行中";
         else if(task.getState()==1)
             str = "已完成";
-        holder.noState.setText(String.valueOf(task.getState()));
+        holder.noState.setText(str);
         holder.itemView.setTag(position);
     }
 

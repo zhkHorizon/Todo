@@ -5,25 +5,72 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@android:drawable/arrow_down_float"
+                android:paddingLeft="3dp"
+                android:text="  任务标题"
+                android:textSize="@dimen/text_size_normal" />
+
             <EditText
                 android:id="@+id/add_task_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="请输入标题"/>
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_edit"
+                android:hint="请输入标题"
+                android:lines="1"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@android:drawable/arrow_down_float"
+                android:paddingLeft="3dp"
+                android:text="  任务描述"
+                android:textSize="@dimen/text_size_normal" />
+
             <EditText
                 android:id="@+id/add_task_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="请输入描述"/>
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_edit"
+                android:hint="请输入描述"
+                android:lines="3"
+                android:maxLines="15"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:id="@+id/add_task_state_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@android:drawable/arrow_down_float"
+                android:paddingLeft="3dp"
+                android:text="  任务状态"
+                android:textSize="@dimen/text_size_normal" />
 
             <Spinner
                 android:id="@+id/add_task_state_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:scrollbarSize="@dimen/text_size_normal"
+                android:spinnerMode="dropdown" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

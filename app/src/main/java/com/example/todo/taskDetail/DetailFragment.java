@@ -101,7 +101,12 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
     public void showTaskDetail(Task task) {
         mTitle.setText(task.getTitle().toString());
         mContent.setText(task.getContext());
-        mState.setText(String.valueOf(task.getState()));
+        String str ="";
+        if(task.getState()==0)
+            str = "进行中";
+        else if(task.getState()==1)
+            str = "已完成";
+        mState.setText(str);
     }
 
     public void setTASK_ID(long TASK_ID) {

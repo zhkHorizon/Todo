@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         app:title="任务详情"
-        ></android.support.v7.widget.Toolbar>
+        android:theme="@style/MytoolBar"
+        app:titleTextColor="@android:color/white"></android.support.v7.widget.Toolbar>
     <LinearLayout
         android:id="@+id/detail_contentFrame"
         android:orientation="vertical"

@@ -11,11 +11,14 @@
             android:id="@+id/contentFrame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></FrameLayout>
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_task_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:src="@mipmap/tick"
             app:layout_anchor="@id/contentFrame"
-            app:layout_anchorGravity="bottom|right|end"/>
+            app:layout_anchorGravity="bottom|right|end" />
     </android.support.design.widget.CoordinatorLayout>
 </LinearLayout>

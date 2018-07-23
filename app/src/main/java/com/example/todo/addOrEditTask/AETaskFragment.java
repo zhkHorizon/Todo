@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.todo.R;
@@ -25,6 +26,7 @@ public class AETaskFragment extends Fragment implements AETaskContract.View{
     private EditText mTitle;
     private EditText mContent;
     private Long taskType = null;
+    private TextView stateTextView;
     private Spinner state;
     private ArrayAdapter<String> adapter;
     public static final String TAG = "AETaskFragment";
@@ -80,8 +82,10 @@ public class AETaskFragment extends Fragment implements AETaskContract.View{
         mTitle = (EditText) root.findViewById(R.id.add_task_title);
         mContent = (EditText) root.findViewById(R.id.add_task_content);
         state = (Spinner) root.findViewById(R.id.add_task_state_spinner);
+        stateTextView = (TextView) root.findViewById(R.id.add_task_state_textView);
         createSpinnerAdapter();
         state.setAdapter(adapter);
+        stateTextView.setVisibility(View.INVISIBLE);
         state.setVisibility(View.INVISIBLE);
         return root;
     }
@@ -90,8 +94,8 @@ public class AETaskFragment extends Fragment implements AETaskContract.View{
         ArrayList<String> list = new ArrayList<String>();
         list.add("进行中");
         list.add("已完成");
-        adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,list);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item,list);
+        adapter.setDropDownViewResource(R.layout.spinner_drop_item);
 
     }
     @Override
@@ -117,6 +121,7 @@ public class AETaskFragment extends Fragment implements AETaskContract.View{
     @Override
     public void setTask(Long id) {
         state.setVisibility(View.VISIBLE);
+        stateTextView.setVisibility(View.VISIBLE);
         this.taskType = id;
         Task task  = mPresenter.findTask(id);
         setTitle(task.getTitle());
