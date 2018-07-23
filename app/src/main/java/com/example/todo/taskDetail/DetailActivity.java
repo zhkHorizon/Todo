@@ -34,23 +34,10 @@ public class DetailActivity extends AppCompatActivity {
         }
         mPresenter = new DetailPresenter(ID,greenDaoManager,detailFragment);
     }
-
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.detail_menu,menu);
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.detail_menu_edit:
-                Toast.makeText(this,"edit",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.detail_menu_delete:
-                Toast.makeText(this,"delete",Toast.LENGTH_SHORT).show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 }

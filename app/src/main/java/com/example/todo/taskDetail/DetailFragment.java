@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,12 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
     private TextView mContent;
     private TextView mState;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     public static DetailFragment newInstance(long taskID){
         DetailFragment fragment = new DetailFragment();
         fragment.setTASK_ID(taskID);
@@ -41,7 +48,8 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.detail_frag,container,false);
-        setHasOptionsMenu(true);
+
+
         mTitle = (TextView) root.findViewById(R.id.detail_title);
         mContent = (TextView) root.findViewById(R.id.detail_content);
         mState = (TextView) root.findViewById(R.id.detail_state);
@@ -62,11 +70,11 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.detail_menu_edit:{
-                mPresenter.deleteTask();
+                editTask();
                 return true;
             }
             case R.id.detail_menu_delete:{
-                editTask();
+                mPresenter.deleteTask();
                 return true;
             }
         }
@@ -91,9 +99,9 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
 
     @Override
     public void showTaskDetail(Task task) {
-        mTitle.setText(task.getTitle());
+        mTitle.setText(task.getTitle().toString());
         mContent.setText(task.getContext());
-        mState.setText(task.getState());
+        mState.setText(String.valueOf(task.getState()));
     }
 
     public void setTASK_ID(long TASK_ID) {

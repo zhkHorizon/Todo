@@ -28,7 +28,7 @@ public class AETaskActivity extends AppCompatActivity {
         mAETaskPresenter = new AETaskPresenter(greenDaoManager,aeTaskFragment);
         Intent intent = getIntent();
         long num = intent.getLongExtra("TYPE",0);
-        if(num != ListFragment.ADD)
-            aeTaskFragment.setTask(new Long(num));//在详情处点击编辑打开此活动
+        mAETaskPresenter.setTaskType(num);
+
     }
 }

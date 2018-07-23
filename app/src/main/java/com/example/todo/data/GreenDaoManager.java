@@ -41,6 +41,7 @@ public class GreenDaoManager {
         Task task = taskDao.queryBuilder()
                 .where(TaskDao.Properties.Id.eq(id))
                 .unique();
+        String title = task.getTitle();
         return task;
     }
 
@@ -58,6 +59,8 @@ public class GreenDaoManager {
     }
 
     public int updateTasks(Task task) {
+        String title = task.getTitle();
+        long id = task.getId().longValue();
         Task dbTask = taskDao.queryBuilder()
                 .where(TaskDao.Properties.Id.eq(task.getId()))
                 .unique();

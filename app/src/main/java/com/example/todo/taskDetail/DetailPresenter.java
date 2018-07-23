@@ -2,6 +2,7 @@ package com.example.todo.taskDetail;
 
 
 import com.example.todo.data.GreenDaoManager;
+import com.example.todo.data.Task;
 
 public class DetailPresenter implements  DetailContract.Presenter {
     private long mtaskID;
@@ -12,10 +13,13 @@ public class DetailPresenter implements  DetailContract.Presenter {
         this.mtaskID = id;
         this.greenDaoManager = greenDaoManager;
         this.mDetailView = view;
+        mDetailView.setPresenter(this);
     }
     @Override
     public void start() {
         //开启任务
+        Task task = greenDaoManager.getTaskById(mtaskID);
+        mDetailView.showTaskDetail(task);
     }
 
 

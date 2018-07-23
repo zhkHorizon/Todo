@@ -28,14 +28,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <android.support.design.widget.FloatingActionButton
+       <!-- <android.support.design.widget.FloatingActionButton
             android:id="@+id/list_frefreshTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             app:backgroundTint="@android:color/holo_green_dark"
             app:layout_anchor="@id/list_contextFrame"
-            app:layout_anchorGravity="top|right|end" />
+            app:layout_anchorGravity="top|right|end" />-->
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/list_faddTask"
             android:layout_width="wrap_content"

@@ -16,6 +16,7 @@ import com.example.todo.OnItemClickListener;
 import com.example.todo.R;
 import com.example.todo.addOrEditTask.AETaskActivity;
 import com.example.todo.data.Task;
+import com.example.todo.taskDetail.DetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,24 +59,27 @@ public class ListFragment extends Fragment implements ListContract.View{
             public void onItemClick(View view, int position) {
                 //点击子项后跳转
                 if(mListAdapter.getTask(position).getId()!=0){
-                    Toast.makeText(getActivity(),"跳转",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), DetailActivity.class);
+                    intent.putExtra("TYPE",mListAdapter.getTask(position).getId());
+                    startActivity(intent);
+                    //Toast.makeText(getActivity(),"跳转",Toast.LENGTH_SHORT).show();
                 }
             }
         });
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.list_faddTask);
-        FloatingActionButton frefresh = (FloatingActionButton) getActivity().findViewById(R.id.list_frefreshTask);
+        //FloatingActionButton frefresh = (FloatingActionButton) getActivity().findViewById(R.id.list_frefreshTask);
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 addNewTask();
             }
         });
-        frefresh.setOnClickListener(new View.OnClickListener() {
+        /*frefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refreshTask();
             }
-        });
+        });*/
         return root;
     }
 

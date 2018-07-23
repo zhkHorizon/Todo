@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ public class AETaskFragment extends Fragment implements AETaskContract.View{
     private Long taskType = null;
     private Spinner state;
     private ArrayAdapter<String> adapter;
+    public static final String TAG = "AETaskFragment";
 
     public static AETaskFragment newInstance(){
         return new AETaskFragment();
@@ -51,12 +53,22 @@ public class AETaskFragment extends Fragment implements AETaskContract.View{
         FloatingActionButton fab =
                 (FloatingActionButton) getActivity().findViewById(R.id.fab_task_done);
         fab.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
-                if(taskType == null) //新建存储
+                if(taskType == null){
+                    //新建存储
+                    Log.d(TAG, "newTask");
                     mPresenter.saveTaskForNew(mTitle.getText().toString(),mContent.getText().toString());
-                else //编辑存储
+                }
+                else{
+                    //编辑存储
+                    Log.d(TAG, "editTask");
+                    Log.d(TAG, "state:"+String.valueOf(state.getSelectedItemPosition()));
                     mPresenter.saveTaskForEdit(mTitle.getText().toString(),mContent.getText().toString(),state.getSelectedItemPosition());
+                }
+
             }
         });
     }
