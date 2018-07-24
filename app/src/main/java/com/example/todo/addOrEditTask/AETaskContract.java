@@ -9,8 +9,8 @@ import java.util.Date;
 
 public class AETaskContract {
     interface Presenter extends BasePresenter{
-        void saveTaskForNew(String title, String content, Date start,Date finish);
-        void saveTaskForEdit(String title,String content,int state, Date start,Date finish);
+        void saveTaskForNew(String title, String content, Date start,Date finish,boolean isAlarm,Date alarmTime);
+        void saveTaskForEdit(String title,String content,int state, Date start,Date finish,boolean isAlarm,Date alarmTime);
         Task findTask(Long id);
     }
     interface View extends BaseView<Presenter>{

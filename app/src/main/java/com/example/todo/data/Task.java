@@ -19,15 +19,19 @@ public class Task {
     private int state;
     private Date startTime;
     private Date finishTime;
-    @Generated(hash = 1148046030)
+    private boolean isAlarm;
+    private Date AlarmTime;
+    @Generated(hash = 169521491)
     public Task(Long id, @NotNull String title, String context, int state,
-            Date startTime, Date finishTime) {
+            Date startTime, Date finishTime, boolean isAlarm, Date AlarmTime) {
         this.id = id;
         this.title = title;
         this.context = context;
         this.state = state;
         this.startTime = startTime;
         this.finishTime = finishTime;
+        this.isAlarm = isAlarm;
+        this.AlarmTime = AlarmTime;
     }
     @Generated(hash = 733837707)
     public Task() {
@@ -67,6 +71,18 @@ public class Task {
     }
     public void setFinishTime(Date finishTime) {
         this.finishTime = finishTime;
+    }
+    public boolean getIsAlarm() {
+        return this.isAlarm;
+    }
+    public void setIsAlarm(boolean isAlarm) {
+        this.isAlarm = isAlarm;
+    }
+    public Date getAlarmTime() {
+        return this.AlarmTime;
+    }
+    public void setAlarmTime(Date AlarmTime) {
+        this.AlarmTime = AlarmTime;
     }
     
 }

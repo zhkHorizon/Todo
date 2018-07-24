@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.todo.OnItemClickListener;
@@ -24,7 +25,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     }
     public void updateData(List<Task> data){
         this.mData = data;
-        //Log.d("adapter_len", String.valueOf(data.size()));
+        Log.d("adapter_len", String.valueOf(data.size()));
         notifyDataSetChanged();
     }
 
@@ -46,13 +47,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         else if(task.getState()==1)
             str = "已完成";
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String date = sdf.format(task.getStartTime())+ "\n" + sdf.format(task.getFinishTime());
 
         holder.noTitle.setText(task.getTitle());
         holder.noState.setText(str);
         holder.noTime.setText(date);
         holder.itemView.setTag(position);
+        if(task.getIsAlarm()){
+            holder.noAlarm.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -65,12 +69,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         TextView noTitle;
         TextView noState;
         TextView noTime;
+        ImageView noAlarm;
 
         public ViewHolder(View itemView) {
             super(itemView);
             noTitle = (TextView) itemView.findViewById(R.id.item_noTitle);
             noState = (TextView) itemView.findViewById(R.id.item_noState);
             noTime = (TextView) itemView.findViewById(R.id.item_noTime);
+            noAlarm = (ImageView) itemView.findViewById(R.id.item_alarmImage);
+            noAlarm.setVisibility(View.INVISIBLE);
         }
     }
     public void setOnItemClickListener(OnItemClickListener listener){

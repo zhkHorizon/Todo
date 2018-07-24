@@ -32,7 +32,7 @@ public class GreenDaoManager {
     public List<Task> getAllTasks() {
         List<Task> taskList = taskDao.queryBuilder()
                 .where(TaskDao.Properties.Id.notEq(999))
-                .limit(5).build().list();
+                .limit(99).build().list();
         return taskList;
     }
 

@@ -82,7 +82,8 @@
 
                     android:drawablePadding="10dp"
                     android:drawableRight="@mipmap/add"
-                    android:gravity="right|center"
+                    android:gravity="left|center"
+                    android:paddingLeft="15dp"
                     android:text="yyyy-mm-dd"
                     android:textSize="20sp" />
 
@@ -98,7 +99,8 @@
                     android:background="@drawable/rounded_time"
                     android:drawablePadding="10dp"
                     android:drawableRight="@mipmap/add"
-                    android:gravity="right|center"
+                    android:gravity="left|center"
+                    android:paddingLeft="15dp"
                     android:text="hh:mm"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -129,7 +131,8 @@
 
                     android:drawablePadding="10dp"
                     android:drawableRight="@mipmap/add"
-                    android:gravity="right|center"
+                    android:gravity="left|center"
+                    android:paddingLeft="15dp"
                     android:text="yyyy-mm-dd"
                     android:textSize="20sp" />
 
@@ -145,7 +148,8 @@
                     android:background="@drawable/rounded_time"
                     android:drawablePadding="10dp"
                     android:drawableRight="@mipmap/add"
-                    android:gravity="right|center"
+                    android:gravity="left|center"
+                    android:paddingLeft="15dp"
                     android:text="hh:mm"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -168,6 +172,58 @@
                 android:layout_marginTop="10dp"
                 android:scrollbarSize="@dimen/text_size_normal"
                 android:spinnerMode="dropdown" />
+
+            <Switch
+                android:id="@+id/add_task_alarm_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="定时提醒"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="@dimen/text_size_normal" />
+
+            <LinearLayout
+                android:id="@+id/add_task_liner_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_edit_out"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <TextView
+                    android:id="@+id/add_task_alarm_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:background="@drawable/rounded_time"
+
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@mipmap/add"
+                    android:gravity="left|center"
+                    android:paddingLeft="15dp"
+                    android:text="yyyy-mm-dd"
+                    android:textSize="20sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/cardview_shadow_start_color" />
+
+                <TextView
+                    android:id="@+id/add_task_alarm_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/rounded_time"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@mipmap/add"
+                    android:gravity="left|center"
+                    android:paddingLeft="15dp"
+                    android:text="hh:mm"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

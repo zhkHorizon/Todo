@@ -78,7 +78,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/round_text"
         android:paddingLeft="15dp"
-        android:text="yyyy-mm-dd 到 yyyy-mm-dd"
+        android:text="yyyy-mm-dd"
         android:textColor="?android:attr/textColorTertiary"
         android:textSize="@dimen/text_size_larger" />
     <TextView
@@ -89,15 +89,40 @@
         android:text=" 任务状态"
         android:textSize="@dimen/text_size_normal" />
 
-    <TextView
-        android:id="@+id/detail_state"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/round_text"
-        android:paddingLeft="15dp"
-        android:text="进行中"
-        android:textColor="?android:attr/textColorTertiary"
-        android:textSize="@dimen/text_size_larger" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/detail_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/round_text"
+            android:paddingLeft="15dp"
+            android:text="进行中"
+            android:textColor="?android:attr/textColorTertiary"
+            android:textSize="@dimen/text_size_larger" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/detail_alarm_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/round_text"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="定时提醒"
+            android:textColor="?android:attr/textColorTertiary"
+            android:textSize="@dimen/text_size_larger" />
+    </LinearLayout>
+
 
 </LinearLayout>

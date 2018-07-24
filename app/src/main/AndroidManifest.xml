@@ -13,11 +13,13 @@
         <activity android:name=".taskList.ListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".addOrEditTask.AETaskActivity" />
-        <activity android:name=".taskDetail.DetailActivity"/>
+        <activity android:name=".taskDetail.DetailActivity" />
+        <receiver android:name=".addOrEditTask.AlarmAction" android:process=":remote"></receiver>
     </application>
 
 </manifest>

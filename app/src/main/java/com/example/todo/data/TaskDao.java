@@ -28,6 +28,8 @@ public class TaskDao extends AbstractDao<Task, Long> {
         public final static Property State = new Property(3, int.class, "state", false, "STATE");
         public final static Property StartTime = new Property(4, java.util.Date.class, "startTime", false, "START_TIME");
         public final static Property FinishTime = new Property(5, java.util.Date.class, "finishTime", false, "FINISH_TIME");
+        public final static Property IsAlarm = new Property(6, boolean.class, "isAlarm", false, "IS_ALARM");
+        public final static Property AlarmTime = new Property(7, java.util.Date.class, "AlarmTime", false, "ALARM_TIME");
     }
 
 
@@ -48,7 +50,9 @@ public class TaskDao extends AbstractDao<Task, Long> {
                 "\"CONTEXT\" TEXT," + // 2: context
                 "\"STATE\" INTEGER NOT NULL ," + // 3: state
                 "\"START_TIME\" INTEGER," + // 4: startTime
-                "\"FINISH_TIME\" INTEGER);"); // 5: finishTime
+                "\"FINISH_TIME\" INTEGER," + // 5: finishTime
+                "\"IS_ALARM\" INTEGER NOT NULL ," + // 6: isAlarm
+                "\"ALARM_TIME\" INTEGER);"); // 7: AlarmTime
     }
 
     /** Drops the underlying database table. */
@@ -82,6 +86,12 @@ public class TaskDao extends AbstractDao<Task, Long> {
         if (finishTime != null) {
             stmt.bindLong(6, finishTime.getTime());
         }
+        stmt.bindLong(7, entity.getIsAlarm() ? 1L: 0L);
+ 
+        java.util.Date AlarmTime = entity.getAlarmTime();
+        if (AlarmTime != null) {
+            stmt.bindLong(8, AlarmTime.getTime());
+        }
     }
 
     @Override
@@ -109,6 +119,12 @@ public class TaskDao extends AbstractDao<Task, Long> {
         if (finishTime != null) {
             stmt.bindLong(6, finishTime.getTime());
         }
+        stmt.bindLong(7, entity.getIsAlarm() ? 1L: 0L);
+ 
+        java.util.Date AlarmTime = entity.getAlarmTime();
+        if (AlarmTime != null) {
+            stmt.bindLong(8, AlarmTime.getTime());
+        }
     }
 
     @Override
@@ -124,7 +140,9 @@ public class TaskDao extends AbstractDao<Task, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // context
             cursor.getInt(offset + 3), // state
             cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)), // startTime
-            cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)) // finishTime
+            cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)), // finishTime
+            cursor.getShort(offset + 6) != 0, // isAlarm
+            cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)) // AlarmTime
         );
         return entity;
     }
@@ -137,6 +155,8 @@ public class TaskDao extends AbstractDao<Task, Long> {
         entity.setState(cursor.getInt(offset + 3));
         entity.setStartTime(cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)));
         entity.setFinishTime(cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
+        entity.setIsAlarm(cursor.getShort(offset + 6) != 0);
+        entity.setAlarmTime(cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)));
      }
     
     @Override

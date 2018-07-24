@@ -29,20 +29,21 @@ public class AETaskPresenter implements AETaskContract.Presenter{
     }
 
     @Override
-    public void saveTaskForNew(String title, String content, Date start, Date finish) {
-        Task task = new Task(null,title,content,defaultState,start,finish);
+    public void saveTaskForNew(String title, String content, Date start, Date finish, boolean isAlarm, Date alarmTime) {
+        Task task = new Task(null,title,content,defaultState,start,finish,isAlarm,alarmTime);
         greenDaoManager.addTasks(task);
         mAETaskView.showMsg("新建成功");
         mAETaskView.closePage();
     }
 
     @Override
-    public void saveTaskForEdit(String title, String content, int state, Date start, Date finish) {
-        Task task = new Task(taskType,title,content,state,start,finish);
+    public void saveTaskForEdit(String title, String content, int state, Date start, Date finish, boolean isAlarm, Date alarmTime) {
+        Task task = new Task(taskType,title,content,state,start,finish,isAlarm,alarmTime);
         greenDaoManager.updateTasks(task);
         mAETaskView.showMsg("修改成功");
         mAETaskView.closePage();
     }
+
 
 
 

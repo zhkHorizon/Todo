@@ -1,8 +1,12 @@
 package com.example.todo.addOrEditTask;
 
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -13,9 +17,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -29,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AETaskFragment extends Fragment implements AETaskContract.View, View.OnClickListener{
+public class AETaskFragment extends Fragment implements AETaskContract.View, View.OnClickListener,CompoundButton.OnCheckedChangeListener{
 
     private AETaskContract.Presenter mPresenter;
     private EditText mTitle;
@@ -39,6 +46,10 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
     private TextView mFinishDate;
     private TextView mStartTime;
     private TextView mFinishTime;
+    private Switch mAlarmState;
+    private TextView mAlarmDate;
+    private TextView mAlarmTime;
+    private LinearLayout mAlarmLayout;
 
     private Calendar c;
     private Long taskType = null;
@@ -75,25 +86,29 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
 
             @Override
             public void onClick(View v) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date start=null,finish=null;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                Date start=null,finish=null,alarm=null;
                 try {
-                    start = sdf.parse(mStartDate.getText().toString());
-                    finish = sdf.parse(mFinishDate.getText().toString()) ;
+                    start = sdf.parse(mStartDate.getText().toString()+" "+mStartTime.getText().toString());
+                    finish = sdf.parse(mFinishDate.getText().toString()+" "+mFinishTime.getText().toString()) ;
+                    alarm = sdf.parse(mAlarmDate.getText().toString()+" "+mAlarmTime.getText().toString()) ;
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                if(mAlarmState.isChecked())
+                    alarmSet();
                 if(taskType == null){
                     //新建存储
                     Log.d(TAG, "newTask");
-                    mPresenter.saveTaskForNew(mTitle.getText().toString(),mContent.getText().toString(),start,finish);
+                    mPresenter.saveTaskForNew(mTitle.getText().toString(),mContent.getText().toString(),
+                            start,finish,mAlarmState.isChecked(),alarm);
                 }
                 else{
                     //编辑存储
                     Log.d(TAG, "editTask");
                     Log.d(TAG, "state:"+String.valueOf(state.getSelectedItemPosition()));
                     mPresenter.saveTaskForEdit(mTitle.getText().toString(),mContent.getText().toString()
-                            ,state.getSelectedItemPosition(),start,finish);
+                            ,state.getSelectedItemPosition(),start,finish,mAlarmState.isChecked(),alarm);
                 }
 
             }
@@ -108,10 +123,15 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
         mContent = (EditText) root.findViewById(R.id.add_task_content);
         state = (Spinner) root.findViewById(R.id.add_task_state_spinner);
         stateTextView = (TextView) root.findViewById(R.id.add_task_state_textView);
+        mAlarmState = (Switch) root.findViewById(R.id.add_task_alarm_switch) ;
+        mAlarmDate = (TextView) root.findViewById(R.id.add_task_alarm_date);
+        mAlarmTime = (TextView) root.findViewById(R.id.add_task_alarm_time);
+        mAlarmLayout = (LinearLayout) root.findViewById(R.id.add_task_liner_alarm);
+
         createSpinnerAdapter();
         state.setAdapter(adapter);
-        stateTextView.setVisibility(View.INVISIBLE);
-        state.setVisibility(View.INVISIBLE);
+        stateTextView.setVisibility(View.GONE);
+        state.setVisibility(View.GONE);
 
         c = Calendar.getInstance();
         Date now = new Date();
@@ -126,7 +146,7 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
         mStartDate.setOnClickListener(this);
         mFinishDate.setOnClickListener(this);
 
-        sdf = new SimpleDateFormat("hh:mm");
+        sdf = new SimpleDateFormat("HH:mm");
         String time = sdf.format(now);
         mStartTime = (TextView)root.findViewById(R.id.add_task_start_time);
         mFinishTime = (TextView) root.findViewById(R.id.add_task_finish_time);
@@ -134,9 +154,35 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
         mFinishTime.setText(time);
         mStartTime.setOnClickListener(this);
         mFinishTime.setOnClickListener(this);
+
+        mAlarmState.setChecked(false);
+        mAlarmDate.setVisibility(View.GONE);
+        mAlarmTime.setVisibility(View.GONE);
+        mAlarmLayout.setVisibility(View.GONE);
+        mAlarmDate.setOnClickListener(this);
+        mAlarmDate.setText(date);
+        mAlarmTime.setOnClickListener(this);
+        mAlarmTime.setText(time);
+        mAlarmState.setOnCheckedChangeListener(this);
         return root;
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+        if(isChecked){
+            //需要提醒
+            mAlarmDate.setVisibility(View.VISIBLE);
+            mAlarmTime.setVisibility(View.VISIBLE);
+            mAlarmLayout.setVisibility(View.VISIBLE);
+
+        }else{
+            mAlarmDate.setVisibility(View.GONE);
+            mAlarmTime.setVisibility(View.GONE);
+            mAlarmLayout.setVisibility(View.GONE);
+            alarmCannel();
+        }
+    }
 
     @Override
     public void onClick(final View text) {
@@ -151,6 +197,10 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
                     c.setTime(task.getFinishTime());
                     showDatePicker(text);
                     break;
+                case R.id.add_task_alarm_date:
+                    c.setTime(task.getAlarmTime());
+                    showDatePicker(text);
+                    break;
                 case R.id.add_task_start_time:
                     c.setTime(task.getStartTime());
                     showTimePiker(text);
@@ -159,20 +209,68 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
                     c.setTime(task.getFinishTime());
                     showTimePiker(text);
                     break;
+                case R.id.add_task_alarm_time:
+                    c.setTime(task.getAlarmTime());
+                    showTimePiker(text);
+
+                    break;
             }
         }else{
             switch (text.getId()){
                 case R.id.add_task_start_date:
                 case R.id.add_task_finish_date:
+                case R.id.add_task_alarm_date:
                     showDatePicker(text);
                     break;
                 case R.id.add_task_start_time:
                 case R.id.add_task_finish_time:
                     showTimePiker(text);
                     break;
+                case R.id.add_task_alarm_time:
+                    showTimePiker(text);
+                    break;
             }
         }
 
+    }
+
+    private void alarmSet(){
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent;
+        Calendar c = Calendar.getInstance();
+        Date alarm = null;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try {
+            alarm = sdf.parse(mAlarmDate.getText().toString()+" "+mAlarmTime.getText().toString()) ;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        c.setTime(alarm);
+        long time = c.getTimeInMillis();
+        Intent intent = new Intent(getContext(),AlarmAction.class);
+        pendingIntent = PendingIntent.getBroadcast(getContext(),0,intent,0);
+        alarmManager.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(), pendingIntent);
+    }
+    private void alarmCannel(){
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent;
+        Calendar c = Calendar.getInstance();
+        Date alarm = null;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try {
+            alarm = sdf.parse(mAlarmDate.getText().toString()+" "+mAlarmTime.getText().toString()) ;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        c.setTime(alarm);
+        long time = c.getTimeInMillis();
+        Intent intent = new Intent(getContext(),AlarmAction.class);
+        pendingIntent = PendingIntent.getBroadcast(getContext(),0,intent,0);
+        alarmManager.cancel(pendingIntent);
     }
     private void showDatePicker(final View text){
         DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
@@ -241,9 +339,19 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         mStartDate.setText(sdf.format(task.getStartTime()));
         mFinishDate.setText(sdf.format(task.getFinishTime()));
-        sdf = new SimpleDateFormat("hh:mm");
+        sdf = new SimpleDateFormat("HH:mm");
         mStartTime.setText(sdf.format(task.getStartTime()));
         mFinishTime.setText(sdf.format(task.getFinishTime()));
+        if(task.getIsAlarm()){
+            mAlarmState.setChecked(true);
+            mAlarmDate.setVisibility(View.VISIBLE);
+            mAlarmTime.setVisibility(View.VISIBLE);
+            mAlarmLayout.setVisibility(View.VISIBLE);
+            sdf = new SimpleDateFormat("yyyy-MM-dd");
+            mAlarmDate.setText(sdf.format(task.getAlarmTime()));
+            sdf = new SimpleDateFormat("HH:mm");
+            mAlarmTime.setText(sdf.format(task.getAlarmTime()));
+        }
     }
 
 }

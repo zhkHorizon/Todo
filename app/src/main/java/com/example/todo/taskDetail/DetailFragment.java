@@ -12,12 +12,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.todo.R;
 import com.example.todo.addOrEditTask.AETaskActivity;
 import com.example.todo.data.Task;
+
+import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 
@@ -29,6 +32,8 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
     private TextView mState;
     private TextView mStartTime;
     private TextView mFinishTime;
+    private TextView mAlarmState;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +64,8 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
         mState = (TextView) root.findViewById(R.id.detail_state);
         mStartTime = (TextView) root.findViewById(R.id.detail_start_time);
         mFinishTime = (TextView) root.findViewById(R.id.detail_finish_time);
+        mAlarmState = (TextView) root.findViewById(R.id.detail_alarm_state);
+
 
         return root;
     }
@@ -114,9 +121,14 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
         else if(task.getState()==1)
             str = "已完成";
         mState.setText(str);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         mStartTime.setText(sdf.format(task.getStartTime()));
         mFinishTime.setText(sdf.format(task.getFinishTime()));
+        if(task.getIsAlarm()){
+            mAlarmState.setText("提醒时间:"+sdf.format(task.getAlarmTime()));
+        }else{
+            mAlarmState.setText("无提醒");
+        }
     }
 
     public void setTASK_ID(long TASK_ID) {

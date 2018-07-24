@@ -1,5 +1,7 @@
 package com.example.todo.taskList;
 
+import android.util.Log;
+
 import com.example.todo.data.GreenDaoManager;
 import com.example.todo.data.Task;
 
@@ -20,6 +22,7 @@ public class ListPresenter implements ListContract.Presenter{
     @Override
     public void start() {
        mListView.showList(getList());
+        Log.d("adapter_len", "start: ");
     }
 
     @Override
