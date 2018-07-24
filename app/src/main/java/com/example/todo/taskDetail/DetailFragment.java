@@ -19,12 +19,15 @@ import com.example.todo.R;
 import com.example.todo.addOrEditTask.AETaskActivity;
 import com.example.todo.data.Task;
 
+import java.text.SimpleDateFormat;
+
 public class DetailFragment extends Fragment implements  DetailContract.View {
     private long TASK_ID;
     private DetailContract.Presenter mPresenter;
     private TextView mTitle;
     private TextView mContent;
     private TextView mState;
+    private TextView mTime;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +56,8 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
         mTitle = (TextView) root.findViewById(R.id.detail_title);
         mContent = (TextView) root.findViewById(R.id.detail_content);
         mState = (TextView) root.findViewById(R.id.detail_state);
+        mTime= (TextView) root.findViewById(R.id.detail_time);
+
         return root;
     }
 
@@ -107,6 +112,9 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
         else if(task.getState()==1)
             str = "已完成";
         mState.setText(str);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sdf.format(task.getStartTime())+ "到" + sdf.format(task.getFinishTime());
+        mTime.setText(date);
     }
 
     public void setTASK_ID(long TASK_ID) {

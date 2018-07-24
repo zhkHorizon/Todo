@@ -12,6 +12,7 @@ import com.example.todo.OnItemClickListener;
 import com.example.todo.R;
 import com.example.todo.data.Task;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,14 +39,21 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Task task = mData.get(position);
-        holder.noTitle.setText(task.getTitle());
+
         String str ="";
         if(task.getState()==0)
             str = "进行中";
         else if(task.getState()==1)
             str = "已完成";
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sdf.format(task.getStartTime())+ "到" + sdf.format(task.getFinishTime());
+
+        holder.noTitle.setText(task.getTitle());
         holder.noState.setText(str);
+        holder.noTime.setText(date);
         holder.itemView.setTag(position);
+
     }
 
     @Override
@@ -56,11 +64,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView noTitle;
         TextView noState;
+        TextView noTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            noTitle = (TextView) itemView.findViewById(R.id.itrm_noTitle);
+            noTitle = (TextView) itemView.findViewById(R.id.item_noTitle);
             noState = (TextView) itemView.findViewById(R.id.item_noState);
+            noTime = (TextView) itemView.findViewById(R.id.item_noTime);
         }
     }
     public void setOnItemClickListener(OnItemClickListener listener){

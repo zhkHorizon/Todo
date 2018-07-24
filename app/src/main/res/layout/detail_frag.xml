@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/round_text"
+        android:paddingLeft="15dp"
         android:text="标题内容"
         android:textColor="?android:attr/textColorTertiary"
         android:textSize="@dimen/text_size_larger" />
@@ -38,7 +39,27 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/round_text"
+        android:paddingLeft="15dp"
         android:text="任务描述"
+        android:textColor="?android:attr/textColorTertiary"
+        android:textSize="@dimen/text_size_larger" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@android:drawable/arrow_down_float"
+        android:text=" 任务持续时间"
+        android:textSize="@dimen/text_size_normal" />
+
+    <TextView
+        android:id="@+id/detail_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_text"
+        android:paddingLeft="15dp"
+        android:text="yyyy-mm-dd 到 yyyy-mm-dd"
         android:textColor="?android:attr/textColorTertiary"
         android:textSize="@dimen/text_size_larger" />
 
@@ -56,6 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@drawable/round_text"
+        android:paddingLeft="15dp"
         android:text="进行中"
         android:textColor="?android:attr/textColorTertiary"
         android:textSize="@dimen/text_size_larger" />

@@ -5,6 +5,9 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.util.Date;
+
+
 @Entity
 public class Task {
     @Id
@@ -14,12 +17,17 @@ public class Task {
     private String title;
     private String context;
     private int state;
-    @Generated(hash = 789236700)
-    public Task(Long id, @NotNull String title, String context, int state) {
+    private Date startTime;
+    private Date finishTime;
+    @Generated(hash = 1148046030)
+    public Task(Long id, @NotNull String title, String context, int state,
+            Date startTime, Date finishTime) {
         this.id = id;
         this.title = title;
         this.context = context;
         this.state = state;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
     }
     @Generated(hash = 733837707)
     public Task() {
@@ -47,6 +55,18 @@ public class Task {
     }
     public void setState(int state) {
         this.state = state;
+    }
+    public Date getStartTime() {
+        return this.startTime;
+    }
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+    public Date getFinishTime() {
+        return this.finishTime;
+    }
+    public void setFinishTime(Date finishTime) {
+        this.finishTime = finishTime;
     }
     
 }

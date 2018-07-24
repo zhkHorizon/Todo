@@ -7,6 +7,8 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -53,6 +55,46 @@
                 android:lines="3"
                 android:maxLines="15"
                 android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@android:drawable/arrow_down_float"
+                android:paddingLeft="3dp"
+                android:text="  开始时间"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:id="@+id/add_task_start_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_time"
+                android:drawablePadding="10dp"
+                android:drawableRight="@mipmap/add"
+                android:gravity="right|center"
+                android:text="yyyy-mm-dd" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@android:drawable/arrow_down_float"
+                android:paddingLeft="3dp"
+                android:text="  结束时间"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:id="@+id/add_task_finish_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_time"
+                android:drawableRight="@mipmap/add"
+                android:gravity="right|center"
+                android:text="yyyy-mm-dd" />
 
             <TextView
                 android:id="@+id/add_task_state_textView"

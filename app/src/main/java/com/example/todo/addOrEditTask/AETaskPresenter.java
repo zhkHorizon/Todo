@@ -7,6 +7,8 @@ import com.example.todo.data.GreenDaoManager;
 import com.example.todo.data.Task;
 import com.example.todo.taskList.ListFragment;
 
+import java.util.Date;
+
 public class AETaskPresenter implements AETaskContract.Presenter{
 
     GreenDaoManager greenDaoManager;
@@ -27,20 +29,22 @@ public class AETaskPresenter implements AETaskContract.Presenter{
     }
 
     @Override
-    public void saveTaskForNew(String title, String content) {
-        Task task = new Task(null,title,content,defaultState);
+    public void saveTaskForNew(String title, String content, Date start, Date finish) {
+        Task task = new Task(null,title,content,defaultState,start,finish);
         greenDaoManager.addTasks(task);
         mAETaskView.showMsg("新建成功");
         mAETaskView.closePage();
     }
 
     @Override
-    public void saveTaskForEdit(String title, String content, int state) {
-        Task task = new Task(taskType,title,content,state);
+    public void saveTaskForEdit(String title, String content, int state, Date start, Date finish) {
+        Task task = new Task(taskType,title,content,state,start,finish);
         greenDaoManager.updateTasks(task);
         mAETaskView.showMsg("修改成功");
         mAETaskView.closePage();
     }
+
+
 
     public void setTaskType(long taskType) {
         this.taskType = taskType;

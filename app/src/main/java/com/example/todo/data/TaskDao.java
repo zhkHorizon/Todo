@@ -26,6 +26,8 @@ public class TaskDao extends AbstractDao<Task, Long> {
         public final static Property Title = new Property(1, String.class, "title", false, "TITLE");
         public final static Property Context = new Property(2, String.class, "context", false, "CONTEXT");
         public final static Property State = new Property(3, int.class, "state", false, "STATE");
+        public final static Property StartTime = new Property(4, java.util.Date.class, "startTime", false, "START_TIME");
+        public final static Property FinishTime = new Property(5, java.util.Date.class, "finishTime", false, "FINISH_TIME");
     }
 
 
@@ -44,7 +46,9 @@ public class TaskDao extends AbstractDao<Task, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"TITLE\" TEXT NOT NULL ," + // 1: title
                 "\"CONTEXT\" TEXT," + // 2: context
-                "\"STATE\" INTEGER NOT NULL );"); // 3: state
+                "\"STATE\" INTEGER NOT NULL ," + // 3: state
+                "\"START_TIME\" INTEGER," + // 4: startTime
+                "\"FINISH_TIME\" INTEGER);"); // 5: finishTime
     }
 
     /** Drops the underlying database table. */
@@ -68,6 +72,16 @@ public class TaskDao extends AbstractDao<Task, Long> {
             stmt.bindString(3, context);
         }
         stmt.bindLong(4, entity.getState());
+ 
+        java.util.Date startTime = entity.getStartTime();
+        if (startTime != null) {
+            stmt.bindLong(5, startTime.getTime());
+        }
+ 
+        java.util.Date finishTime = entity.getFinishTime();
+        if (finishTime != null) {
+            stmt.bindLong(6, finishTime.getTime());
+        }
     }
 
     @Override
@@ -85,6 +99,16 @@ public class TaskDao extends AbstractDao<Task, Long> {
             stmt.bindString(3, context);
         }
         stmt.bindLong(4, entity.getState());
+ 
+        java.util.Date startTime = entity.getStartTime();
+        if (startTime != null) {
+            stmt.bindLong(5, startTime.getTime());
+        }
+ 
+        java.util.Date finishTime = entity.getFinishTime();
+        if (finishTime != null) {
+            stmt.bindLong(6, finishTime.getTime());
+        }
     }
 
     @Override
@@ -98,7 +122,9 @@ public class TaskDao extends AbstractDao<Task, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // title
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // context
-            cursor.getInt(offset + 3) // state
+            cursor.getInt(offset + 3), // state
+            cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)), // startTime
+            cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)) // finishTime
         );
         return entity;
     }
@@ -109,6 +135,8 @@ public class TaskDao extends AbstractDao<Task, Long> {
         entity.setTitle(cursor.getString(offset + 1));
         entity.setContext(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setState(cursor.getInt(offset + 3));
+        entity.setStartTime(cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)));
+        entity.setFinishTime(cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
      }
     
     @Override
