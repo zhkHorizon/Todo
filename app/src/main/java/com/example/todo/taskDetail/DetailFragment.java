@@ -27,7 +27,8 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
     private TextView mTitle;
     private TextView mContent;
     private TextView mState;
-    private TextView mTime;
+    private TextView mStartTime;
+    private TextView mFinishTime;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +57,8 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
         mTitle = (TextView) root.findViewById(R.id.detail_title);
         mContent = (TextView) root.findViewById(R.id.detail_content);
         mState = (TextView) root.findViewById(R.id.detail_state);
-        mTime= (TextView) root.findViewById(R.id.detail_time);
+        mStartTime = (TextView) root.findViewById(R.id.detail_start_time);
+        mFinishTime = (TextView) root.findViewById(R.id.detail_finish_time);
 
         return root;
     }
@@ -112,9 +114,9 @@ public class DetailFragment extends Fragment implements  DetailContract.View {
         else if(task.getState()==1)
             str = "已完成";
         mState.setText(str);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String date = sdf.format(task.getStartTime())+ "到" + sdf.format(task.getFinishTime());
-        mTime.setText(date);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        mStartTime.setText(sdf.format(task.getStartTime()));
+        mFinishTime.setText(sdf.format(task.getFinishTime()));
     }
 
     public void setTASK_ID(long TASK_ID) {

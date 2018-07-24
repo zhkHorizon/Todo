@@ -46,8 +46,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> im
         else if(task.getState()==1)
             str = "已完成";
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String date = sdf.format(task.getStartTime())+ "到" + sdf.format(task.getFinishTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        String date = sdf.format(task.getStartTime())+ "\n" + sdf.format(task.getFinishTime());
 
         holder.noTitle.setText(task.getTitle());
         holder.noState.setText(str);

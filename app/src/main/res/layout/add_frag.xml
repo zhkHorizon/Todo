@@ -64,17 +64,45 @@
                 android:text="  开始时间"
                 android:textSize="@dimen/text_size_normal" />
 
-            <TextView
-                android:id="@+id/add_task_start_time"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/rounded_time"
-                android:drawablePadding="10dp"
-                android:drawableRight="@mipmap/add"
-                android:gravity="right|center"
-                android:text="yyyy-mm-dd" />
+                android:background="@drawable/rounded_edit_out"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <TextView
+                    android:id="@+id/add_task_start_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_time"
+
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@mipmap/add"
+                    android:gravity="right|center"
+                    android:text="yyyy-mm-dd"
+                    android:textSize="20sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/cardview_shadow_start_color" />
+
+                <TextView
+                    android:id="@+id/add_task_start_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_time"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@mipmap/add"
+                    android:gravity="right|center"
+                    android:text="hh:mm"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -84,17 +112,44 @@
                 android:text="  结束时间"
                 android:textSize="@dimen/text_size_normal" />
 
-            <TextView
-                android:id="@+id/add_task_finish_time"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/rounded_time"
-                android:drawableRight="@mipmap/add"
-                android:gravity="right|center"
-                android:text="yyyy-mm-dd" />
+                android:background="@drawable/rounded_edit_out"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <TextView
+                    android:id="@+id/add_task_finish_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_time"
+
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@mipmap/add"
+                    android:gravity="right|center"
+                    android:text="yyyy-mm-dd"
+                    android:textSize="20sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/cardview_shadow_start_color" />
+
+                <TextView
+                    android:id="@+id/add_task_finish_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_time"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@mipmap/add"
+                    android:gravity="right|center"
+                    android:text="hh:mm"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/add_task_state_textView"

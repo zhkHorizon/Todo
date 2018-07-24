@@ -9,11 +9,7 @@
                 android:left="7dp"
                 android:right="7dp"
                 android:top="7dp" />
-            <corners android:radius="3dp" />
 
-            <stroke
-                android:width="3px"
-                android:color="#DDDBDE" />
 
             <solid android:color="#fff" />
 

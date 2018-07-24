@@ -2,10 +2,9 @@ package com.example.todo.addOrEditTask;
 
 
 import android.app.DatePickerDialog;
-import android.os.Build;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
@@ -14,11 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.todo.R;
@@ -35,8 +34,11 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
     private AETaskContract.Presenter mPresenter;
     private EditText mTitle;
     private EditText mContent;
+
+    private TextView mStartDate;
+    private TextView mFinishDate;
     private TextView mStartTime;
-    private TextView mFinihTime;
+    private TextView mFinishTime;
 
     private Calendar c;
     private Long taskType = null;
@@ -76,8 +78,8 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date start=null,finish=null;
                 try {
-                    start = sdf.parse(mStartTime.getText().toString());
-                    finish = sdf.parse(mFinihTime.getText().toString()) ;
+                    start = sdf.parse(mStartDate.getText().toString());
+                    finish = sdf.parse(mFinishDate.getText().toString()) ;
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -112,25 +114,67 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
         state.setVisibility(View.INVISIBLE);
 
         c = Calendar.getInstance();
-        String time = String.valueOf(c.get(Calendar.YEAR))+"-"+
-                String.valueOf(c.get(Calendar.MONTH)+1)+"-"+
-                String.valueOf(c.get(Calendar.DAY_OF_MONTH));
+        Date now = new Date();
+        c.setTime(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sdf.format(now);
 
-        mStartTime = (TextView) root.findViewById(R.id.add_task_start_time);
-        mFinihTime = (TextView) root.findViewById(R.id.add_task_finish_time);
-        mStartTime.setInputType(InputType.TYPE_NULL);
-        mFinihTime.setInputType(InputType.TYPE_NULL);
+        mStartDate = (TextView) root.findViewById(R.id.add_task_start_date);
+        mFinishDate = (TextView) root.findViewById(R.id.add_task_finish_date);
+        mStartDate.setText(date);
+        mFinishDate.setText(date);
+        mStartDate.setOnClickListener(this);
+        mFinishDate.setOnClickListener(this);
+
+        sdf = new SimpleDateFormat("hh:mm");
+        String time = sdf.format(now);
+        mStartTime = (TextView)root.findViewById(R.id.add_task_start_time);
+        mFinishTime = (TextView) root.findViewById(R.id.add_task_finish_time);
         mStartTime.setText(time);
-        mFinihTime.setText(time);
+        mFinishTime.setText(time);
         mStartTime.setOnClickListener(this);
-        mFinihTime.setOnClickListener(this);
+        mFinishTime.setOnClickListener(this);
         return root;
     }
 
 
     @Override
     public void onClick(final View text) {
+        if(taskType!=null){
+            Task task  = mPresenter.findTask(taskType);
+            switch (text.getId()){
+                case R.id.add_task_start_date:
+                    c.setTime(task.getStartTime());
+                    showDatePicker(text);
+                    break;
+                case R.id.add_task_finish_date:
+                    c.setTime(task.getFinishTime());
+                    showDatePicker(text);
+                    break;
+                case R.id.add_task_start_time:
+                    c.setTime(task.getStartTime());
+                    showTimePiker(text);
+                    break;
+                case R.id.add_task_finish_time:
+                    c.setTime(task.getFinishTime());
+                    showTimePiker(text);
+                    break;
+            }
+        }else{
+            switch (text.getId()){
+                case R.id.add_task_start_date:
+                case R.id.add_task_finish_date:
+                    showDatePicker(text);
+                    break;
+                case R.id.add_task_start_time:
+                case R.id.add_task_finish_time:
+                    showTimePiker(text);
+                    break;
+            }
+        }
 
+    }
+    private void showDatePicker(final View text){
         DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -139,22 +183,24 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
             }
         };
         DatePickerDialog dialog;
-        if(taskType!=null){
-            Task task  = mPresenter.findTask(taskType);
-            switch (text.getId()){
-                case R.id.add_task_start_time:
-                    c.setTime(task.getStartTime());
-                    break;
-                case R.id.add_task_finish_time:
-                    c.setTime(task.getFinishTime());
-                    break;
-            }
-        }
         dialog = new DatePickerDialog(getContext(),listener,
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
         dialog.show();
     }
-
+    private void showTimePiker(final View text){
+        Log.d(TAG, "showTimePiker: ");
+        TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                TextView t = (TextView) text;
+                t.setText(hourOfDay+":"+minute);
+            }
+        };
+        TimePickerDialog dialog;
+        dialog = new TimePickerDialog(getContext(),listener,
+                c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE),true);
+        dialog.show();
+    }
     private void createSpinnerAdapter(){
         ArrayList<String> list = new ArrayList<String>();
         list.add("进行中");
@@ -193,8 +239,11 @@ public class AETaskFragment extends Fragment implements AETaskContract.View, Vie
         setContent(task.getContext());
         state.setSelection(task.getState());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        mStartDate.setText(sdf.format(task.getStartTime()));
+        mFinishDate.setText(sdf.format(task.getFinishTime()));
+        sdf = new SimpleDateFormat("hh:mm");
         mStartTime.setText(sdf.format(task.getStartTime()));
-        mFinihTime.setText(sdf.format(task.getFinishTime()));
+        mFinishTime.setText(sdf.format(task.getFinishTime()));
     }
 
 }
