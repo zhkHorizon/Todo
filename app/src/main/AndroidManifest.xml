@@ -20,6 +20,20 @@
         <activity android:name=".addOrEditTask.AETaskActivity" />
         <activity android:name=".taskDetail.DetailActivity" />
         <receiver android:name=".addOrEditTask.AlarmAction" android:process=":remote"></receiver>
+        <receiver android:name=".desktop.DeskTopWidget">
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"></action>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/desktop_widget">
+            </meta-data>
+        </receiver>
+        <service
+            android:name=".desktop.UpdateService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

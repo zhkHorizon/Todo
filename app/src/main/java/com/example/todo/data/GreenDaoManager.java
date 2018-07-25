@@ -2,6 +2,7 @@ package com.example.todo.data;
 
 import com.example.todo.BaseApplication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,6 +37,14 @@ public class GreenDaoManager {
         return taskList;
     }
 
+    public List<String> getAllTasksTitle(){
+        List<String> title = new ArrayList<>();
+        List<Task> taskList = getAllTasks();
+        for(Task t:taskList){
+            title.add(t.getTitle());
+        }
+        return title;
+    }
 
     public Task getTaskById(long id) {
         Task task = taskDao.queryBuilder()
